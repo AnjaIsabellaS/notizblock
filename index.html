@@ -10,7 +10,11 @@
     <link rel="stylesheet" href="./styles/standard.css">
     <link rel="stylesheet" href="./style.css">
 </head>
-<body>
+<body onload="renderNotes()">
     <h1>Notizblock</h1>
+    <input id="note_input" type="text">
+    <button onclick="addNote()">Notiz speichern</button>
+    <div id="content"></div>
+      
 </body>
 </html>
