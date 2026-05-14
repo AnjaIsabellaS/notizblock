@@ -1,5 +1,4 @@
 
-
 let notes = ['banana', 'rasen mähen'];
 
 let trashNotes = [];
