@@ -1,6 +1,7 @@
-
+let notesTitles = ['Ba', 'Aufgabe'];
 let notes = ['banana', 'rasen mähen'];
 
+let trashNotesTitles = [];
 let trashNotes = [];
 
 function renderNotes() {
@@ -27,11 +28,11 @@ function renderTrashNotes() {
 
 
 function getNoteTemplate(indexNote) {
-    return `<p>+ ${notes[indexNote]}<button onclick="pushToTrash(${indexNote})">In den Papierkorb</button></p>`;
+    return `<p>+ title: ${notesTitles[indexNote]} -> ${notes[indexNote]}<button onclick="pushToTrash(${indexNote})">In den Papierkorb</button></p>`;
 }
 
 function getTrashNoteTemplate(indexTrashNote) {
-    return `<p>+ ${trashNotes[indexTrashNote]}<button onclick="deleteNote(${indexTrashNote})">Löschen</button></p>`;
+    return `<p>+ title: ${trashNotesTitles[indexTrashNote]} -> ${trashNotes[indexTrashNote]}<button onclick="deleteNote(${indexTrashNote})">Löschen</button></p>`;
 }
 
 
@@ -50,7 +51,10 @@ function addNote() {
 
 function pushToTrash(indexNote) {
     let trashNote = notes.splice(indexNote, 1);
-    trashNotes.push(trashNote);
+    trashNotes.push(trashNote[0]);
+    let trashNoteTitle = notesTitles.splice(indexNote, 1);
+    trashNotesTitles.push(trashNoteTitle[0]);
+
     renderNotes();
     renderTrashNotes();
 }
