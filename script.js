@@ -20,6 +20,10 @@ function renderNotes() {
 
 
 function renderTrashNotes() {
+    getFromLocalStorageTrashNotes();
+    getFromLocalStorageTrashNotesTitles();
+
+
     let trashContentRef = document.getElementById('trash_content');
     trashContentRef.innerHTML = "";
     
@@ -94,27 +98,59 @@ function pushToTrash(indexNote) {
     let trashNoteTitle = notesTitles.splice(indexNote, 1);
     trashNotesTitles.push(trashNoteTitle[0]);
 
+    saveToLocalStorageNotes();
+    saveToLocalStorageNotesTitles();
+
     saveToLocalStorageTrashNotesTitles();
     saveToLocalStorageTrashNotes();
     renderNotes();
+
     renderTrashNotes();
 }
 
    
 function saveToLocalStorageTrashNotesTitles() {
-    localStorage.setItem("trashNotesTitles", JSON.stringify(notesTitles));
+    localStorage.setItem("trashNotesTitles", JSON.stringify(trashNotesTitles));
 }
 
 function saveToLocalStorageTrashNotes() {
-    localStorage.setItem("trashNotes", JSON.stringify(notes));
+    localStorage.setItem("trashNotes", JSON.stringify(trashNotes));
+}
+
+function getFromLocalStorageTrashNotes() {
+    
+    let myArrTrashNote = JSON.parse(localStorage.getItem("trashNotes"));
+    
+    if (myArrTrashNote === null) {
+         return; 
+    }
+
+    trashNotes = myArrTrashNote; // Wird bei null niemals ausgeführt
+}
+
+
+function getFromLocalStorageTrashNotesTitles() {
+    
+    let myArrNoteTrashTitle = JSON.parse(localStorage.getItem("trashNotesTitles"));
+    
+    if (myArrNoteTrashTitle === null) {
+         return; 
+    }
+
+    trashNotesTitles = myArrNoteTrashTitle; // Wird bei null niemals ausgeführt
 }
 
 function deleteNote(indexNote) {
     trashNotes.splice(indexNote, 1);
+    trashNotesTitles.splice(indexNote, 1); 
+
+    // WICHTIG: Den geleerten Papierkorb im Speicher aktualisieren!
+    saveToLocalStorageTrashNotes();
+    saveToLocalStorageTrashNotesTitles();
+
     renderNotes();
     renderTrashNotes();
 }
 
 
 
-//notizen archivieren
