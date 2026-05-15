@@ -4,6 +4,9 @@ let notes = ['banana', 'rasen mähen'];
 let trashNotesTitles = [];
 let trashNotes = [];
 
+let archivNotesTitles = [];
+let archivNotes = [];
+
 
 function renderNotes() {
     getFromLocalStorageNotes();
@@ -15,6 +18,15 @@ function renderNotes() {
     for (let indexNote = 0; indexNote < notes.length; indexNote++) {
         const note = notes[indexNote];
         contentRef.innerHTML += getNoteTemplate(indexNote);
+    }
+}
+
+function renderArchivNotes() {
+    let archivContentRef = document.getElementById('archiv_content');
+    archivContentRef.innerHTML = "";
+    
+    for (let indexArchivNote = 0; indexArchivNote < archivNotes.length; indexArchivNote++) {
+         archivContentRef.innerHTML += getArchivNoteTemplate(indexArchivNote);
     }
 }
 
@@ -34,27 +46,63 @@ function renderTrashNotes() {
 
 
 function getNoteTemplate(indexNote) {
-    return `<p>+ title: ${notesTitles[indexNote]} -> ${notes[indexNote]}<button onclick="pushToTrash(${indexNote})">In den Papierkorb</button></p>`;
+    return `
+    <div class="note">
+        <h3>${notesTitles[indexNote]}</h3>
+        <p>${notes[indexNote]}</p>
+        <div>
+            <button onclick="pushToTrash(${indexNote})" class="btn">X</button>
+            <button onclick="noteToArchiv(${indexNote})" class="btn">A</button>
+        </div>
+    </div>
+    `;
+}
+
+
+function getArchivNoteTemplate(indexArchivNote) {
+    return `
+    <div class="note">
+        <h3>${archivNotesTitles[indexArchivNote]}</h3>
+        <p>${archivNotes[indexArchivNote]}</p>
+        <div>
+            <button onclick="archivToTrash(${indexArchivNote})" class="btn">X</button>
+            <button onclick="archivToNote(${indexArchivNote})" class="btn">N</button>
+        </div>
+    </div>
+    `;
 }
 
 function getTrashNoteTemplate(indexTrashNote) {
-    return `<p>+ title: ${trashNotesTitles[indexTrashNote]} -> ${trashNotes[indexTrashNote]}<button onclick="deleteNote(${indexTrashNote})">Löschen</button></p>`;
+    return `
+    <div class="note">
+        <h3>${trashNotesTitles[indexTrashNote]}</h3>
+        <p>${trashNotes[indexTrashNote]}</p>
+        <div>
+            <button onclick="deleteNote(${indexTrashNote})" class="btn">X</button>
+            <button onclick="trashToNote(${indexTrashNote})" class="btn">X</button>
+            `;
 }
 
 
 function addNote() {
     let noteInputRef = document.getElementById('note_input');
+    let noteTitleInputRef = document.getElementById('note_input_title');
     let noteInput = noteInputRef.value;
+    let noteTitle = noteTitleInputRef.value;
     
-    if (noteInput !== "") { 
+    if (noteInput == "" || noteTitle == "") { 
+        return
+    }
+
         notes.push(noteInput);
-        notesTitles.push(noteInput); 
+        notesTitles.push(noteTitle); 
         
         saveToLocalStorageNotesTitles();
         saveToLocalStorageNotes();
         renderNotes();
         noteInputRef.value = "";
-    }
+        noteTitleInputRef = "";
+    
 }
 
 

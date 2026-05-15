@@ -9,14 +9,23 @@
     <script src="./script.js"></script>
 
     <link rel="stylesheet" href="./styles/standard.css">
+    <link rel="stylesheet" href="./styles/assets.css">
+     <link rel="stylesheet" href="./styles/note.css">
     <link rel="stylesheet" href="./style.css">
 </head>
 <body onload="renderNotes(); renderTrashNotes()">
     <h1>Notizblock</h1>
-    <input id="note_input" type="text">
-    <button onclick="addNote()">Notiz speichern</button>
+    <div class="inputbox">
+        <p>title:</p>
+        <input id="note_input_title" type="text">
+        content:
+        <input id="note_input" type="text">
+        <button onclick="addNote()">Notiz speichern</button>
+    </div>
     <h2>notes</h2>
     <div id="content"></div>
+    <h2>archiv</h2>
+    <div id="archiv_content"></div>
     <h2>trash</h2>
     <div id="trash_content"></div>
     
