@@ -22,6 +22,10 @@ function renderNotes() {
 }
 
 function renderArchivNotes() {
+
+    getFromLocalStorageArchivNotes();
+    getFromLocalStorageArchivNotesTitles();
+
     let archivContentRef = document.getElementById('archiv_content');
     archivContentRef.innerHTML = "";
     
@@ -80,7 +84,9 @@ function getTrashNoteTemplate(indexTrashNote) {
         <div>
             <button onclick="deleteNote(${indexTrashNote})" class="btn">X</button>
             <button onclick="trashToNote(${indexTrashNote})" class="btn">N</button>
-            `;
+        </div>
+    </div>
+    `;
 }
 
 
@@ -155,6 +161,23 @@ function noteToArchiv(indexArchivNote) {
     renderArchivNotes();
 }
 
+function archivToTrash(indexArchivNote) {
+    let trashNote = archivNotes.splice(indexArchivNote, 1);
+    let trashNoteTitle = archivNotesTitles.splice(indexArchivNote, 1);
+
+    trashNotes.push(trashNote[0]);
+    trashNotesTitles.push(trashNoteTitle[0]);
+
+    saveToLocalStorageArchivNotes();
+    saveToLocalStorageArchivNotesTitles();
+
+    saveToLocalStorageTrashNotes();
+    saveToLocalStorageTrashNotesTitles();
+
+    renderArchivNotes();
+    renderTrashNotes();
+}
+
 function saveToLocalStorageArchivNotes() {
     localStorage.setItem("archivNotes", JSON.stringify(archivNotes));
 }
@@ -180,6 +203,44 @@ function pushToTrash(indexNote) {
     renderTrashNotes();
 }
 
+function archivToNote(indexArchivNote) {
+    let note = archivNotes.splice(indexArchivNote, 1);
+    let noteTitle = archivNotesTitles.splice(indexArchivNote, 1);
+
+    notes.push(note[0]);
+    notesTitles.push(noteTitle[0]);
+
+    saveToLocalStorageArchivNotes();
+    saveToLocalStorageArchivNotesTitles();
+
+    saveToLocalStorageNotes();
+    saveToLocalStorageNotesTitles();
+
+    renderArchivNotes();
+    renderNotes();
+}
+
+function trashToNote(indexTrashNote) {
+    let note = trashNotes.splice(indexTrashNote, 1);
+    let noteTitle = trashNotesTitles.splice(indexTrashNote, 1);
+
+  
+    notes.push(note[0]);
+    notesTitles.push(noteTitle[0]);
+
+
+    saveToLocalStorageTrashNotes();
+    saveToLocalStorageTrashNotesTitles();
+
+
+    saveToLocalStorageNotes();
+    saveToLocalStorageNotesTitles();
+
+   
+    renderTrashNotes();
+    renderNotes();
+}
+
 
 
    
@@ -189,6 +250,22 @@ function saveToLocalStorageTrashNotesTitles() {
 
 function saveToLocalStorageTrashNotes() {
     localStorage.setItem("trashNotes", JSON.stringify(trashNotes));
+}
+
+function getFromLocalStorageArchivNotes() {
+    let myArrArchivNote = JSON.parse(localStorage.getItem("archivNotes"));
+    if (myArrArchivNote === null) {
+         return; 
+    }
+    archivNotes = myArrArchivNote;
+}
+
+function getFromLocalStorageArchivNotesTitles() {
+    let myArrArchivNoteTitle = JSON.parse(localStorage.getItem("archivNotesTitles"));
+    if (myArrArchivNoteTitle === null) {
+         return; 
+    }
+    archivNotesTitles = myArrArchivNoteTitle;
 }
 
 function getFromLocalStorageTrashNotes() {
