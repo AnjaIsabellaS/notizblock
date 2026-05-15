@@ -139,6 +139,30 @@ function getFromLocalStorageNotesTitles() {
 }
 
 
+function noteToArchiv(indexArchivNote) {
+    let archivNote = notes.splice(indexArchivNote, 1);
+    archivNotes.push(archivNote[0]);
+    let archivNoteTitle = notesTitles.splice(indexArchivNote, 1);
+    archivNotesTitles.push(archivNoteTitle[0]);
+
+    saveToLocalStorageNotes();
+    saveToLocalStorageNotesTitles();
+
+    saveToLocalStorageArchivNotes();
+    saveToLocalStorageArchivNotesTitles();
+
+    renderNotes();
+    renderArchivNotes();
+}
+
+function saveToLocalStorageArchivNotes() {
+    localStorage.setItem("archivNotes", JSON.stringify(archivNotes));
+}
+
+function saveToLocalStorageArchivNotesTitles() {
+    localStorage.setItem("archivNotesTitles", JSON.stringify(archivNotesTitles));
+}
+
 
 function pushToTrash(indexNote) {
     let trashNote = notes.splice(indexNote, 1);
@@ -155,6 +179,8 @@ function pushToTrash(indexNote) {
 
     renderTrashNotes();
 }
+
+
 
    
 function saveToLocalStorageTrashNotesTitles() {
