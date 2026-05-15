@@ -5,6 +5,9 @@ let trashNotesTitles = [];
 let trashNotes = [];
 
 function renderNotes() {
+    getFromLocalStorageNotes();
+    getFromLocalStorageNotesTitles();
+
     let contentRef = document.getElementById('content');
     contentRef.innerHTML = "";
     
@@ -38,15 +41,52 @@ function getTrashNoteTemplate(indexTrashNote) {
 
 function addNote() {
     let noteInputRef = document.getElementById('note_input');
-    let noteInput = noteInputRef.value; 
-
-    notes.push(noteInput);
-
-    renderNotes();
-
-    noteInputRef.value = "";
-
+    let noteInput = noteInputRef.value;
+    
+    if (noteInput !== "") { 
+        notes.push(noteInput);
+        notesTitles.push(noteInput); 
+        
+        saveToLocalStorageNotesTitles();
+        saveToLocalStorageNotes();
+        renderNotes();
+        noteInputRef.value = "";
+    }
 }
+
+
+function saveToLocalStorageNotesTitles() {
+    localStorage.setItem("notesTitles", JSON.stringify(notesTitles));
+}
+
+function saveToLocalStorageNotes() {
+    localStorage.setItem("notes", JSON.stringify(notes));
+}
+
+
+function getFromLocalStorageNotes() {
+    
+    let myArrNote = JSON.parse(localStorage.getItem("notes"));
+    
+    if (myArrNote === null) {
+         return; 
+    }
+
+    notes = myArrNote; // Wird bei null niemals ausgeführt
+}
+
+
+function getFromLocalStorageNotesTitles() {
+    
+    let myArrNoteTitle = JSON.parse(localStorage.getItem("notesTitles"));
+    
+    if (myArrNoteTitle === null) {
+         return; 
+    }
+
+    notesTitles = myArrNoteTitle; // Wird bei null niemals ausgeführt
+}
+
 
 
 function pushToTrash(indexNote) {
