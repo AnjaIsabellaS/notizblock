@@ -4,6 +4,7 @@ let notes = ['banana', 'rasen mähen'];
 let trashNotesTitles = [];
 let trashNotes = [];
 
+
 function renderNotes() {
     getFromLocalStorageNotes();
     getFromLocalStorageNotesTitles();
@@ -15,7 +16,6 @@ function renderNotes() {
         const note = notes[indexNote];
         contentRef.innerHTML += getNoteTemplate(indexNote);
     }
-
 }
 
 
@@ -26,7 +26,6 @@ function renderTrashNotes() {
     for (let indexTrashNote = 0; indexTrashNote < trashNotes.length; indexTrashNote++) {
         trashContentRef.innerHTML += getTrashNoteTemplate(indexTrashNote);
     }
-
 }
 
 
@@ -95,8 +94,19 @@ function pushToTrash(indexNote) {
     let trashNoteTitle = notesTitles.splice(indexNote, 1);
     trashNotesTitles.push(trashNoteTitle[0]);
 
+    saveToLocalStorageTrashNotesTitles();
+    saveToLocalStorageTrashNotes();
     renderNotes();
     renderTrashNotes();
+}
+
+   
+function saveToLocalStorageTrashNotesTitles() {
+    localStorage.setItem("trashNotesTitles", JSON.stringify(notesTitles));
+}
+
+function saveToLocalStorageTrashNotes() {
+    localStorage.setItem("trashNotes", JSON.stringify(notes));
 }
 
 function deleteNote(indexNote) {
