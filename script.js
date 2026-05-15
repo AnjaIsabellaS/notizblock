@@ -101,7 +101,7 @@ function addNote() {
         saveToLocalStorageNotes();
         renderNotes();
         noteInputRef.value = "";
-        noteTitleInputRef = "";
+        noteTitleInputRef.value = "";
     
 }
 
