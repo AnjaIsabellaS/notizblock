@@ -23,7 +23,19 @@
 #content {
     display: flex;
     flex-direction: row;
-    gap: 25px;
+    padding-bottom: 20px;
+}
+
+#archiv_content {
+    display: flex;
+    flex-direction: row;
+    padding-bottom: 20px;
+}
+
+#trash_content {
+    display: flex;
+    flex-direction: row;
+    padding-bottom: 20px;
 }
 
 h1 {
