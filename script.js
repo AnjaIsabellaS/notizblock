@@ -79,7 +79,7 @@ function getTrashNoteTemplate(indexTrashNote) {
         <p>${trashNotes[indexTrashNote]}</p>
         <div>
             <button onclick="deleteNote(${indexTrashNote})" class="btn">X</button>
-            <button onclick="trashToNote(${indexTrashNote})" class="btn">X</button>
+            <button onclick="trashToNote(${indexTrashNote})" class="btn">N</button>
             `;
 }
 
